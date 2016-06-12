@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="asset/css/index.css">
+    <script type="text/javascript" src="asset/js/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-2 text-right">
+            <p class="title">身長は</p>
+        </div>
+        <div class="col-xs-11 text-left">
+            <p id="height"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    var socket        = io.connect('192.168.10.5:3000');
+    var heightElement = document.getElementById("height");
+
+    socket.on('connect', function (data) {});
+    socket.on('message', function(data){
+
+        height = parseFloat(data);
+        height = 185 - height;
+
+        var foo = floatFormat(height, 2) + ' cm';
+
+        heightElement.innerText = foo;
+    });
+
+    function floatFormat( number, n ) {
+        var _pow = Math.pow( 10 , n ) ;
+
+        return Math.round( number * _pow ) / _pow ;
+    }
+</script>
+
+</body>
+</html>
